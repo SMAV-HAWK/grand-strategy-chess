@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  LOCATION: "./game"
 
 jobs:
   build:
@@ -16,9 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Find
-      run: cd ./game/
     - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      run: cargo build --verbose --manifest-path {LOCATION}/Cargo.toml
+    - name: Run Tests
+      run: cargo test --verbose --manifest-path {LOCATION}/Cargo.toml
