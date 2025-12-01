@@ -8,9 +8,19 @@ use bevy::{
   prelude::*,
 };
 
+const GAME_WINDOW_TITLE: &str = "Grand Strategy Chess Window";
+const GAME_TITLE: &str = "Grand Strategy Chess";
+
 fn main() {
   App::new()
-    .add_plugins(DefaultPlugins)
+    .add_plugins(DefaultPlugins.set(WindowPlugin {
+      primary_window: Some(Window {
+        title: GAME_WINDOW_TITLE.into(),
+        name: Some(GAME_TITLE.into()),
+        ..default()
+      }),
+      ..default()
+    }))
     .add_systems(Startup, setup)
     .add_systems(FixedUpdate, controls)
     .add_systems(PostUpdate, draw_cursor.after(TransformSystems::Propagate))
@@ -69,16 +79,16 @@ fn controls(
   }
 
   if let Some(viewport) = camera.viewport.as_mut() {
-    if input.pressed(KeyCode::KeyW) {
+    if input.pressed(KeyCode::KeyW) && !input.pressed(KeyCode::KeyS) {
       viewport.physical_position.y = viewport.physical_position.y.saturating_sub(uspeed);
     }
-    if input.pressed(KeyCode::KeyS) {
+    if input.pressed(KeyCode::KeyS) && !input.pressed(KeyCode::KeyW) {
       viewport.physical_position.y += uspeed;
     }
-    if input.pressed(KeyCode::KeyA) {
+    if input.pressed(KeyCode::KeyA) && !input.pressed(KeyCode::KeyD) {
       viewport.physical_position.x = viewport.physical_position.x.saturating_sub(uspeed);
     }
-    if input.pressed(KeyCode::KeyD) {
+    if input.pressed(KeyCode::KeyD) && !input.pressed(KeyCode::KeyA) {
       viewport.physical_position.x += uspeed;
     }
 
@@ -108,13 +118,13 @@ fn setup(
   window: Single<&Window>
 ) { 
   let window_size = window.resolution.physical_size().as_vec2();
-
+  
   commands.spawn((
     Camera2d,
     Camera {
-      viewport: Some(Viewport { 
-        physical_position: (window_size).as_uvec2(), 
-        physical_size: (window_size).as_uvec2(), 
+      viewport: Some(Viewport {
+        physical_position: (window_size * 0.125).as_uvec2(), 
+        physical_size: window_size.as_uvec2(), 
         ..default()
       }),
       ..default()
@@ -136,19 +146,23 @@ fn setup(
       ..default()
     }
   ));
-
+  
   commands.spawn((
     Mesh2d(meshes.add(Rectangle::new(40.0, 20.0))),
-    MeshMaterial2d(materials.add(Color::from(GREEN)))
-  ));
-
-  /* 
-  commands.spawn((
-    Mesh2d(meshes.add(Rectangle::new(50000.0, 50000.0))),
     MeshMaterial2d(materials.add(Color::linear_rgb(0.01, 0.01, 0.01))),
+  ));  
+  
+  commands.spawn((
+    Mesh2d(meshes.add(Rectangle::new(400.0, 200.0))),
+    MeshMaterial2d(materials.add(Color::from(GREEN))),
     Transform::from_translation(Vec3::new(0.0,0.0,-200.0)),
+    Node {
+      position_type: PositionType::Absolute,
+      top: px(12),
+      left: px(12),
+      ..default()
+    }
   ));
-  */
 }
 
 
