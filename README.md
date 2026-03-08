@@ -8,12 +8,16 @@ Welcome to a world of chess, just a little a more complicated.
 
 You are now setup to start developing the GSC.
 
-## Tools
-* Rust - 1.911
-* Bevy - 0.17.3
-* Visul Studio Code - latest
-  * rust-analyzer - 0.3.2693
+## Get Documenting
+1. For progress on features and fixes, update the issues board with sub issues and closing issues through PRs.
+2. For design and architecture changes to the game, use Obsidian to review the notes.
 
+## Tools
+* Language - Rust - 1.911
+* Engine - Bevy - 0.18.1
+* IDE - Visul Studio Code - latest
+  * Extention - rust-analyzer - 0.3.2693
+* Notes - Obsidian - latest
 
 ## Methodologies
 * CICD
