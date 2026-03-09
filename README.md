@@ -16,7 +16,7 @@ You are now setup to start developing the GSC.
 * Language - Rust - 1.911
 * Engine - Bevy - 0.18.1
 * IDE - Visul Studio Code - latest
-  * Extention - rust-analyzer - 0.3.2693
+  * Extention - rust-analyzer - 0.3.2811
 * Notes - Obsidian - latest
 
 ## Methodologies
